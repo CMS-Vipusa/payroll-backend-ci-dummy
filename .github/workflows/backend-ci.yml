@@ -29,10 +29,10 @@ jobs:
       - name: Build and push Docker image
         id: build
         run: |
-          IMAGE_TAG=${GITHUB_SHA::8}
-          docker build -t vipusa/payroll_sys_back:$IMAGE_TAG .
-          docker push vipusa/payroll_sys_back:$IMAGE_TAG
-          echo "image-tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+          IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/payroll_sys_back
+          docker build -t $IMAGE_NAME:latest .
+          docker push $IMAGE_NAME:latest
+          echo "image-tag=latest" >> $GITHUB_OUTPUT
 
       - name: Trigger deploy
         uses: peter-evans/repository-dispatch@v2
