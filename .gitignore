@@ -1,0 +1,5 @@
+node_modules
+document
+logs
+.env
+.env.example
