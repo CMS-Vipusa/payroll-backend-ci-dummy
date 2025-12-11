@@ -19,8 +19,20 @@ const contractsRoutes = require('./routes/contracts.routes');   // ⬅ add this
 
 const app = express();
 
+const allowedOrigins = (process.env.FRONTEND_URLS)
+  .split(',')
+  .map(url => url.trim());
+
+console.log('Allowed Origins for CORS:', allowedOrigins);
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS blocked: origin not allowed -> ' + origin));
+    }
+  },
   credentials: true,
   methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization'],
