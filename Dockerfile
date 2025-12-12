@@ -4,6 +4,8 @@ FROM node:20-alpine
 # Set working directory
 WORKDIR /app
 
+RUN apk add --no-cache wget
+
 # Copy package.json and package-lock.json first
 COPY package*.json ./
 
